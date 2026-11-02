@@ -20,16 +20,26 @@ export const radius = {
   full: 9999,
 } as const;
 
-export const fontFamily = Platform.select({
+const systemFonts = Platform.select({
   ios: { sans: 'system-ui', serif: 'ui-serif', rounded: 'ui-rounded', mono: 'ui-monospace' },
   web: {
-    sans: 'Inter, ui-sans-serif, system-ui, sans-serif',
+    sans: 'ui-sans-serif, system-ui, sans-serif',
     serif: 'Georgia, serif',
     rounded: 'ui-rounded, sans-serif',
     mono: 'ui-monospace, monospace',
   },
   default: { sans: 'normal', serif: 'serif', rounded: 'normal', mono: 'monospace' },
 }) ?? { sans: 'normal', serif: 'serif', rounded: 'normal', mono: 'monospace' };
+
+export const fontFamily = {
+  ...systemFonts,
+  /**
+   * Brand typeface (Airbnb Cereal). Falls back to the system font until the
+   * font files are added to assets/fonts and loaded — then set this to the
+   * loaded family name.
+   */
+  brand: systemFonts.sans,
+};
 
 export const fontSize = {
   xs: 12,

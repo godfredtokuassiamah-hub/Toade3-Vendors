@@ -2,7 +2,7 @@
  * Color tokens. Components should consume semantic names (e.g. `text`,
  * `background`) via `useTheme()` rather than raw palette values.
  */
-const palette = {
+export const palette = {
   white: '#FFFFFF',
   black: '#000000',
   gray50: '#F7F7F8',
