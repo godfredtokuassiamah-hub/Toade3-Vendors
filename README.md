@@ -1,56 +1,70 @@
-# Welcome to your Expo app 👋
+# Vendors
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+React Native app built with Expo (SDK 58), Expo Router, and TypeScript.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Getting started
 
 ```bash
-npm run reset-project
+npm install
+cp .env.example .env.local   # PowerShell: Copy-Item .env.example .env.local
+npm start                    # then press a (Android), i (iOS), or w (web)
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## Scripts
 
-### Other setup steps
+| Script              | Purpose                             |
+| ------------------- | ----------------------------------- |
+| `npm start`         | Start the Metro dev server          |
+| `npm run typecheck` | TypeScript check (`tsc --noEmit`)   |
+| `npm run lint`      | ESLint (Expo config + Prettier)     |
+| `npm run lint:fix`  | Auto-fix lint issues                |
+| `npm run format`    | Format all files with Prettier      |
+| `npm run validate`  | Typecheck + lint + format check     |
+| `npm run doctor`    | Check Expo dependency/config health |
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Add packages with `npx expo install <pkg>` so versions match the SDK.
 
-## Learn more
+## Folder structure
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+src/
+├── app/                 # Expo Router routes ONLY (thin screens, layouts)
+│   ├── _layout.tsx      # Root layout: mounts AppProviders + root Stack
+│   └── index.tsx        # Entry route
+├── features/            # Feature modules (domain logic lives here)
+│   └── <feature>/
+│       ├── api/         # Endpoint calls + React Query hooks (useXQuery, useXMutation)
+│       ├── components/  # Feature-specific UI
+│       ├── hooks/
+│       ├── store/       # Feature-local zustand store (if needed)
+│       ├── types.ts
+│       └── index.ts     # Public API of the feature
+├── components/
+│   ├── ui/              # Reusable design-system primitives (Button, Text, Input…)
+│   └── layout/          # Screen containers, headers, spacers
+├── theme/               # Design tokens (colors, spacing, radius, typography) + useTheme()
+├── providers/           # App-wide providers (gesture, safe area, query, navigation theme)
+├── services/api/        # HTTP client (fetch wrapper, auth header, ApiError)
+├── lib/                 # Configured 3rd-party instances (queryClient, storage, secureStorage)
+├── store/               # Global zustand stores (session, app settings)
+├── hooks/               # Shared hooks
+├── config/              # Typed env config (EXPO_PUBLIC_*)
+├── constants/           # App-wide constants
+├── types/               # Shared TypeScript types
+└── utils/               # Pure helper functions
+assets/                  # Images, fonts, icons
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Conventions
 
-## Join the community
+- **Routes stay thin.** A file in `src/app/` composes components from `features/` and `components/`; it holds no business logic.
+- **Dependency direction:** `app → features → components/ui, services, lib, theme, utils`. Features don't import from other features' internals, only from their `index.ts`.
+- **Imports:** use the `@/` alias (`@/theme`, `@/services/api`). Deep relative imports (`../../`) are blocked by ESLint.
+- **Server state** goes in React Query (`@tanstack/react-query`); **client state** goes in zustand. Don't mirror server data into zustand.
+- **Persistence:** `lib/storage` (AsyncStorage) for non-sensitive data, `lib/secure-storage` (expo-secure-store) for tokens.
+- **Styling:** read colors and tokens from `useTheme()`; never hard-code hex values in components.
+- **File names:** kebab-case (`user-card.tsx`), components exported in PascalCase.
 
-Join our community of developers creating universal apps.
+## Environment variables
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Only `EXPO_PUBLIC_*` variables are bundled into the app and they are visible to users, so never store secrets in them. Access them through `@/config/env`.
