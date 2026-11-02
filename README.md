@@ -42,10 +42,10 @@ src/
 ├── components/
 │   ├── ui/              # Reusable design-system primitives (Button, Text, Input…)
 │   └── layout/          # Screen containers, headers, spacers
-├── theme/               # Design tokens (colors, spacing, radius, typography) + useTheme()
+├── theme/               # Toade3 design tokens: colors, text (Manrope), spacing, radius, shadows, sizes, motion
 ├── providers/           # App-wide providers (gesture, safe area, query, navigation theme)
 ├── services/api/        # HTTP client (fetch wrapper, auth header, ApiError)
-├── lib/                 # Configured 3rd-party instances (queryClient, storage, secureStorage)
+├── lib/                 # queryClient, storage, secureStorage, haptics, format (money/dates)
 ├── store/               # Global zustand stores (session, app settings)
 ├── hooks/               # Shared hooks
 ├── config/              # Typed env config (EXPO_PUBLIC_*)
@@ -62,7 +62,7 @@ assets/                  # Images, fonts, icons
 - **Imports:** use the `@/` alias (`@/theme`, `@/services/api`). Deep relative imports (`../../`) are blocked by ESLint.
 - **Server state** goes in React Query (`@tanstack/react-query`); **client state** goes in zustand. Don't mirror server data into zustand.
 - **Persistence:** `lib/storage` (AsyncStorage) for non-sensitive data, `lib/secure-storage` (expo-secure-store) for tokens.
-- **Styling:** read colors and tokens from `useTheme()`; never hard-code hex values in components.
+- **Design system:** all UI follows the Toade3 design system in [`Design/`](Design/README.md). Import tokens from `@/theme` (`colors`, `text`, `spacing`, `layout`, `radius`, `shadows`, `sizes`, `motion`); never hard-code hex values, fonts or radii. Manrope only, weight via `fontFamily`, never `fontWeight`. Light mode only.
 - **File names:** kebab-case (`user-card.tsx`), components exported in PascalCase.
 
 ## Environment variables

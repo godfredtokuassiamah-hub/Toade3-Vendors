@@ -2,7 +2,7 @@ import { Image, ImageBackground } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { fontFamily, fontSize, fontWeight, palette, spacing } from '@/theme';
+import { colors, spacing, text } from '@/theme';
 
 const background = require('@/assets/images/onboarding-background.png');
 const logo = require('@/assets/images/logo-icon.png');
@@ -11,11 +11,15 @@ const logo = require('@/assets/images/logo-icon.png');
 const LOGO_WIDTH = 64;
 const LOGO_HEIGHT = Math.round((LOGO_WIDTH * 71) / 57);
 
-/** Brand screen: illustrated background with the black-tinted logo and app name. */
+/** Brand screen: illustrated background with the logo and app name in brand black. */
 export function LogoScreen() {
   return (
-    <ImageBackground source={background} contentFit="cover" style={styles.container}>
-      {/* Background is light in both color schemes, so always use dark status bar content. */}
+    <ImageBackground
+      source={background}
+      contentFit="cover"
+      style={styles.container}
+      accessible={false}
+    >
       <StatusBar style="dark" />
       <View
         style={styles.brand}
@@ -25,7 +29,7 @@ export function LogoScreen() {
       >
         <Image
           source={logo}
-          tintColor={palette.black}
+          tintColor={colors.text}
           contentFit="contain"
           style={styles.logo}
           accessible={false}
@@ -41,20 +45,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.background,
   },
   brand: {
     alignItems: 'center',
-    gap: spacing.md,
+    gap: spacing.xxl,
   },
   logo: {
     width: LOGO_WIDTH,
     height: LOGO_HEIGHT,
   },
   name: {
-    fontFamily: fontFamily.brand,
-    fontSize: fontSize.xl,
-    fontWeight: fontWeight.bold,
-    letterSpacing: -0.3,
-    color: palette.black,
+    ...text.hero,
   },
 });

@@ -7,3 +7,5 @@ android
 package-lock.json
 .snapshots
 .claude
+# Design system docs are a shared source; keep them byte-identical to the original
+Design

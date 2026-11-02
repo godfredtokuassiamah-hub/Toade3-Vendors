@@ -14,6 +14,8 @@ function parseAppEnv(value: string | undefined): AppEnv {
 export const env = {
   appEnv: parseAppEnv(process.env.EXPO_PUBLIC_APP_ENV),
   apiUrl: process.env.EXPO_PUBLIC_API_URL ?? '',
+  /** Use in-app mock responses instead of the real API (no backend needed). */
+  useMocks: process.env.EXPO_PUBLIC_USE_MOCKS === 'true',
 } as const;
 
 export const isDev = env.appEnv === 'development';
