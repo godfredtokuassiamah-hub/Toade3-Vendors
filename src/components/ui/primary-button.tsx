@@ -15,7 +15,7 @@ type PrimaryButtonProps = {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  /** Fill when enabled. Defaults to brand orange. */
+  /** Fill when enabled. Defaults to `colors.primary`. */
   color?: string;
   accessibilityHint?: string;
 };

@@ -19,7 +19,7 @@ type FloatingLabelInputProps = Omit<TextInputProps, 'style' | 'placeholder'> & {
   label: string;
   /** Shown under the field in red and announced. Wins over the focus stroke. */
   error?: string | null;
-  /** Focus stroke, cursor and selection colour. Defaults to brand orange. */
+  /** Focus stroke, cursor and selection colour. Defaults to `colors.primary`. */
   accentColor?: string;
 };
 

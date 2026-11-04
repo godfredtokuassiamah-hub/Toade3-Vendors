@@ -42,7 +42,7 @@ type PageDotsProps = {
   pageWidth: number;
 };
 
-/** Pagination indicator: active page is a wide orange bar, others are grey dots. */
+/** Pagination indicator: active page is a wide primary bar, others are grey dots. */
 export function PageDots({ count, activeIndex, scrollX, pageWidth }: PageDotsProps) {
   return (
     <View

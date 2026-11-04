@@ -7,12 +7,14 @@
  */
 export const colors = {
   // Brand
-  primary: '#E8682A', // primary actions, links, ETA text, selection, focus stroke
-  primaryLight: '#FDEFE6', // selected chip/row fill, "Popular" badge, initials avatar
+  // Vendor app: primary is black (the customer app uses orange #E8682A).
+  // Roles are unchanged: primary = primary action / selected.
+  primary: '#111111', // primary actions, links, ETA text, selection, focus stroke
+  primaryLight: '#F0F0F0', // selected chip/row fill, "Popular" badge, initials avatar
   navy: '#152244', // secondary brand colour, use sparingly
-  headerTop: '#C9410F', // top of the orange auth header gradient
-  headerBottom: '#F07A3E', // bottom of the orange auth header gradient
-  cartBadge: '#B84A18', // count badge sitting on an orange surface
+  headerTop: '#000000', // top of the auth header gradient
+  headerBottom: '#3A3A3A', // bottom of the auth header gradient
+  cartBadge: '#3A3A3A', // count badge sitting on a primary (black) surface
   brandYellow: '#FCB501', // only as a low-alpha tint in the empty-state wash
 
   // Text
@@ -20,7 +22,7 @@ export const colors = {
   textMuted: '#6B6B6B', // secondary text, subtitles, meta lines, hints
   placeholder: '#8A8A8A', // placeholders, floating labels at rest
   disabledText: '#9E9E9E', // text on disabled buttons
-  white: '#FFFFFF', // text on orange/dark/image surfaces; page, card, sheet background
+  white: '#FFFFFF', // text on primary/dark/image surfaces; page, card, sheet background
 
   // Surfaces
   background: '#FFFFFF',
@@ -56,11 +58,9 @@ export const colors = {
   frostedFill: 'rgba(250,250,252,0.86)',
   tabInactive: '#8E8E93',
 
-  // Vendor app only: the auth flow uses black where the customer app uses orange
-  // (header gradient, focus stroke, primary button, OTP focus box, links).
-  authAccent: '#111111',
-  authHeaderTop: '#000000',
-  authHeaderBottom: '#3A3A3A',
+  // Vendor app only: short bottom gradient behind white copy on onboarding photos.
+  scrim: 'rgba(0,0,0,0.55)',
+  scrimClear: 'rgba(0,0,0,0)',
 } as const;
 
 export type ColorToken = keyof typeof colors;
